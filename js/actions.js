@@ -36,7 +36,7 @@ function receivePosts(subreddit, json) {
 }
 
 function fetchPosts(subreddit) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(requestPosts(subreddit))
 
     /* About Promise
