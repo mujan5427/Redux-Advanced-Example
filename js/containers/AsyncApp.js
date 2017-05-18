@@ -6,6 +6,10 @@ import Posts from '../components/Posts'
 
 class AsyncApp extends Component {
   constructor(props) {
+
+    // When implementing the constructor for a React.Component subclass,
+    // you should call super(props) before any other statement.
+    // Otherwise, this.props will be undefined in the constructor
     super(props)
 
     this.handleChange = this.handleChange.bind(this)
