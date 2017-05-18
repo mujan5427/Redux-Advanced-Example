@@ -36,9 +36,15 @@ function receivePosts(subreddit, json) {
 }
 
 function fetchPosts(subreddit) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(requestPosts(subreddit))
-    return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+
+    /* About Promise
+     *
+     * then() : Appends fulfillment and rejection handlers to the promise,
+     *          and returns a new promise resolving to the return value of the called handler
+     */
+    fetch(`https://www.reddit.com/r/${subreddit}.json`)
       .then(response => response.json())
       .then(json => dispatch(receivePosts(subreddit, json)))
   }
@@ -46,6 +52,9 @@ function fetchPosts(subreddit) {
 
 function shouldFetchPosts(state, subreddit) {
   const posts = state.postsBySubreddit[subreddit]
+
+  // Boolean conversion
+  // like 0, an empty string, null, undefined and NaN become false.
   if (!posts) {
     return true
   } else if (posts.isFetching) {
@@ -55,6 +64,8 @@ function shouldFetchPosts(state, subreddit) {
   }
 }
 
+// Redux Thunk middleware allows you to write action creators that return a function instead of an action.
+// The inner function receives the store methods dispatch and getState as parameters.
 export function fetchPostsIfNeeded(subreddit) {
   return (dispatch, getState) => {
     if (shouldFetchPosts(getState(), subreddit)) {
