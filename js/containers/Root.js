@@ -4,7 +4,6 @@ import configureStore from '../configureStore'
 import AsyncApp from './AsyncApp'
 
 const store = configureStore()
-console.log(`Root Element State : ${JSON.stringify(store.getState())}`);
 export default class Root extends Component {
   render() {
     return (
