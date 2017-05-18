@@ -7,6 +7,7 @@ import Posts from '../components/Posts'
 class AsyncApp extends Component {
   constructor(props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
   }
@@ -38,6 +39,8 @@ class AsyncApp extends Component {
   }
 
   render() {
+    /* console.log(`AsyncApp's props : ${Object.keys(this.props)}`);
+    AsyncApp's props : selectedSubreddit,posts,isFetching,lastUpdated,dispatch */
     const { selectedSubreddit, posts, isFetching, lastUpdated } = this.props
     return (
       <div>
@@ -45,7 +48,9 @@ class AsyncApp extends Component {
                 onChange={this.handleChange}
                 options={[ 'reactjs', 'frontend' ]} />
         <p>
-          {/* true && expression always evaluates to expression, and false && expression always evaluates to false. */}
+          {/* true && expression always evaluates to expression,
+              and
+              false && expression always evaluates to false. */}
           {lastUpdated &&
             <span>
               Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
@@ -76,7 +81,6 @@ class AsyncApp extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(`AsyncApp State : ${JSON.stringify(state)}`);
   const { selectedSubreddit, postsBySubreddit } = state
   const {
     isFetching,
@@ -95,4 +99,14 @@ function mapStateToProps(state) {
   }
 }
 
+/*
+ * connect() does not modify the component class passed to it;
+ * instead, it returns a new, connected component class for you to use.
+ *
+ * mapStateToProps() : If this argument is specified, the new component will subscribe to Redux store updates.
+ *                     This means that any time the store is updated, mapStateToProps() will be called.
+ *
+ * mapDispatchToProps() : If you omit it, the default implementation
+ *                        just injects dispatch() into your component’s props.
+ */
 export default connect(mapStateToProps)(AsyncApp)
