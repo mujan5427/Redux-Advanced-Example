@@ -6,7 +6,6 @@ import Posts from '../components/Posts'
 
 class AsyncApp extends Component {
   constructor(props) {
-
     // When implementing the constructor for a React.Component subclass,
     // you should call super(props) before any other statement.
     // Otherwise, this.props will be undefined in the constructor
@@ -22,7 +21,7 @@ class AsyncApp extends Component {
     dispatch(fetchPostsIfNeeded(selectedSubreddit))
   }
 
-  // The componentDidUpdate() is invoked immediately after updating occurs.
+  // The componentDidUpdate() is invoked immediately after updating occurs (this props of component is different).
   // This method is not called for the initial render.
   componentDidUpdate(prevProps) {
 
@@ -46,6 +45,9 @@ class AsyncApp extends Component {
 
     const { dispatch, selectedSubreddit } = this.props
     dispatch(invalidateSubreddit(selectedSubreddit))
+
+    // If you want to remove this code below, must be sure
+    // state of didInvalidate property can reflect render() is called
     dispatch(fetchPostsIfNeeded(selectedSubreddit))
   }
 
@@ -90,7 +92,6 @@ class AsyncApp extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(JSON.stringify(state));
   const { selectedSubreddit, postsBySubreddit } = state
   const {
     isFetching,
