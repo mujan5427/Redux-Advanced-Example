@@ -22,7 +22,12 @@ class AsyncApp extends Component {
     dispatch(fetchPostsIfNeeded(selectedSubreddit))
   }
 
+  // The componentDidUpdate() is invoked immediately after updating occurs.
+  // This method is not called for the initial render.
   componentDidUpdate(prevProps) {
+
+    // You can always extract code of inner if operator to perform.
+    // Because, the condition of if operator and behavior of onChange of <Picker> element are equal.
     if (this.props.selectedSubreddit !== prevProps.selectedSubreddit) {
       const { dispatch, selectedSubreddit } = this.props
       dispatch(fetchPostsIfNeeded(selectedSubreddit))
@@ -31,7 +36,9 @@ class AsyncApp extends Component {
 
   handleChange(nextSubreddit) {
     this.props.dispatch(selectSubreddit(nextSubreddit))
-    this.props.dispatch(fetchPostsIfNeeded(nextSubreddit))
+
+    // This's extra code from official example I think
+    // this.props.dispatch(fetchPostsIfNeeded(nextSubreddit))
   }
 
   handleRefreshClick(e) {
@@ -83,6 +90,7 @@ class AsyncApp extends Component {
 }
 
 function mapStateToProps(state) {
+  // console.log(JSON.stringify(state));
   const { selectedSubreddit, postsBySubreddit } = state
   const {
     isFetching,
